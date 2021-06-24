@@ -14,38 +14,44 @@ tableData.forEach((ufoSiting) => {
 
 //add Filter to look for specific date and return the result
 // Select the button
-var button = d3.select("#button");
+var button = d3.select("#filter-btn");
 
 // Select the form
-var form = d3.select("#form");
+var form = d3.select("#form-control");
 
 // Create event handlers 
 button.on("click", runEnter);
-form.on("submit",runEnter);
+form.on("submit", runEnter);
+
 
 // Complete the event handler function for the form
 function runEnter() {
-    // Prevent the page from refreshing
-    d3.event.preventDefault();
-    
-    // Select the input element and get the raw HTML node
-    var inputElement = d3.select("#datetime");
+  //select the list
+  var formList = d3.select("tbody");
 
-    // Get the value property of the input element
-    var inputValue = inputElement.property("value");
+  //remove children from the list
+  formList.html("");
 
-    console.log(inputValue);
-    //console.log(tableData);
+  // Prevent the page from refreshing
+  d3.event.preventDefault();
+  
+  // Select the input element and get the raw HTML node
+  var inputElement = d3.select("#datetime");
+  console.log(inputElement);
+  // Get the value property of the input element
+  var inputValue = inputElement.property("value");
+  
+  console.log(inputValue);
+  //console.log(tableData);
+  
+  var filteredDate = tableData.filter(date => date.datetime === inputValue);
+  console.log(filteredDate);
 
-    var filteredDate = tableData.filter(date => date.datetime === inputValue);
-
-    console.log(filteredDate);
-
-    //filteredDate.forEach((ufoSiting) => {
-        //var row = tbody.append("tr");
-        //Object.entries(ufoSiting).forEach(([key, value]) => {
-          //var cell = row.append("td");
-          //cell.text(value);
-        //});
-    //});
+  filteredDate.forEach((ufoSiting) => {
+    var row = tbody.append("tr");
+    Object.entries(ufoSiting).forEach(([key, value]) => {
+      var cell = row.append("td");
+      cell.text(value);
+    });
+  });
 };
